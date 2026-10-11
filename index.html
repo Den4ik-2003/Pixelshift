@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>PIXELSHIFT — Your photo. Your style. Your art.</title>
+    <meta
+      name="description"
+      content="Онлайн-редактор художніх фотоефектів. Усе працює локально у вашому браузері."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <a class="logo" href="#top">PIXEL<span>SHIFT</span></a>
+      <nav aria-label="Основне меню">
+        <a href="#editor">Editor</a><a href="#editor">Styles</a
+        ><a href="#how">How it works</a><a href="#about">About</a>
+      </nav>
+      <a class="btn" href="#editor" id="start">Start creating</a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="copy">
+          <h1>Your photo.<br />Your style.<br />Your art.</h1>
+          <p class="lead">
+            Перетворюй звичайні фотографії на цифрове мистецтво за кілька
+            секунд.
+          </p>
+          <p class="muted">
+            15 алгоритмічних стилів, тонкі налаштування та експорт у PNG чи JPEG
+            — без реєстрації й безкоштовно.
+          </p>
+          <button class="btn" id="heroUp" type="button">
+            Завантажити фото
+          </button>
+        </div>
+        <figure class="demo">
+          <figcaption class="tag">Демо — не ваше фото</figcaption>
+          <div class="cmp" id="demo" style="--x: 50%">
+            <canvas id="dB"></canvas><canvas id="dA" class="top-c"></canvas>
+            <div
+              class="hd"
+              id="dH"
+              role="slider"
+              tabindex="0"
+              aria-label="Порівняння до і після"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="50"
+            ></div>
+          </div>
+        </figure>
+      </section>
+
+      <section id="editor" class="ed" aria-label="Редактор">
+        <aside id="styles">
+          <h2>Стилі</h2>
+          <div id="recent" class="chips"></div>
+          <div id="grid"></div>
+        </aside>
+
+        <div class="center" id="center">
+          <div
+            class="drop"
+            id="drop"
+            tabindex="0"
+            role="button"
+            aria-label="Завантажити фото"
+          >
+            <strong>Перетягніть фото сюди або натисніть, щоб вибрати</strong>
+            <span>JPEG, PNG або WebP · до 25 МБ · Ctrl + O</span>
+            <small
+              >Ваші фотографії обробляються безпосередньо у браузері та не
+              завантажуються на наш сервер.</small
+            >
+          </div>
+          <div id="work" hidden>
+            <div class="bar">
+              <div class="seg" role="group" aria-label="Режим перегляду">
+                <button data-m="res" class="on" type="button">Результат</button
+                ><button data-m="orig" type="button">Оригінал</button
+                ><button data-m="cmp" type="button">До / Після</button>
+              </div>
+              <div class="seg">
+                <button id="zo" type="button" aria-label="Зменшити">−</button
+                ><button id="zf" type="button">Fit</button
+                ><button id="zi" type="button" aria-label="Збільшити">+</button>
+              </div>
+            </div>
+            <div class="stage" id="stage" data-mode="res">
+              <div class="inner" id="inner" style="--x: 50%">
+                <canvas id="cR"></canvas><canvas id="cO"></canvas>
+                <div
+                  class="hd"
+                  id="hd"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Повзунок порівняння"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                ></div>
+              </div>
+              <div class="spin" id="spin" hidden role="status">Обробка…</div>
+            </div>
+            <div class="acts">
+              <button class="ghost" id="change" type="button">
+                Змінити фото
+              </button>
+              <button class="ghost" id="remove" type="button">Видалити</button>
+              <label
+                >Формат
+                <select id="fmt">
+                  <option value="png">PNG</option>
+                  <option value="jpeg">JPEG</option>
+                </select></label
+              >
+              <label
+                >Якість
+                <input
+                  id="qual"
+                  type="range"
+                  min="40"
+                  max="100"
+                  value="92"
+                  disabled
+              /></label>
+              <label
+                >Розмір
+                <select id="size">
+                  <option value="max">Максимум</option>
+                  <option value="2048">2048 px</option>
+                  <option value="1280">1280 px</option>
+                  <option value="720">720 px</option>
+                </select></label
+              >
+              <button class="btn" id="dl" type="button">Завантажити</button>
+            </div>
+          </div>
+        </div>
+
+        <aside id="panel">
+          <h2 id="pt">Налаштування</h2>
+          <div id="ctl"></div>
+          <div class="btns">
+            <button class="ghost" id="reset" type="button">Скинути</button
+            ><button class="ghost" id="rand" type="button">
+              Випадкові параметри</button
+            ><button class="ghost" id="art" type="button">Random Art</button
+            ><button class="ghost" id="roul" type="button">
+              Style Roulette
+            </button>
+          </div>
+          <h3>Пресети</h3>
+          <div id="pre" class="chips"></div>
+          <button class="link" id="keys" type="button">Гарячі клавіші</button>
+        </aside>
+      </section>
+
+      <section id="how" class="info">
+        <h2>How it works</h2>
+        <ol>
+          <li>Завантажте JPEG, PNG або WebP.</li>
+          <li>
+            Виберіть стиль і налаштуйте параметри — результат оновлюється
+            наживо.
+          </li>
+          <li>Порівняйте з оригіналом і збережіть PNG або JPEG.</li>
+        </ol>
+      </section>
+      <section id="about" class="info">
+        <h2>About</h2>
+        <p>
+          PIXELSHIFT працює повністю у браузері на HTML Canvas. Фото не
+          залишають ваш пристрій: немає серверів, аналітики чи сторонніх
+          скриптів. У localStorage зберігаються лише улюблені стилі.
+        </p>
+      </section>
+    </main>
+
+    <input
+      type="file"
+      id="file"
+      accept="image/jpeg,image/png,image/webp"
+      hidden
+    />
+    <div id="toast" role="status" aria-live="polite"></div>
+    <div
+      id="modal"
+      class="modal"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label="Гарячі клавіші"
+    >
+      <div>
+        <h2>Гарячі клавіші</h2>
+        <p><kbd>Ctrl</kbd>+<kbd>O</kbd> — відкрити фото</p>
+        <p><kbd>Ctrl</kbd>+<kbd>S</kbd> — зберегти результат</p>
+        <p><kbd>R</kbd> — скинути параметри</p>
+        <p><kbd>Esc</kbd> — закрити вікно</p>
+        <button class="btn" id="mx" type="button">Закрити</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
